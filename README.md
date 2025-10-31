@@ -56,6 +56,7 @@ It simulates two nodes (`node_a` and `node_b`) and shared public schemas to demo
 In pgAdmin or psql, create a new empty database:
 ```sql
 CREATE DATABASE CCR;
+```
 
 ### 2. Restore from SQL Dump
 
