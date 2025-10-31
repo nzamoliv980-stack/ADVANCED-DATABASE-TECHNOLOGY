@@ -1,6 +1,6 @@
-# 🏗️ Construction Management System (CMS) Database
+# Construction Management System (CMS) Database
 
-## 📋 Overview
+## Overview
 This SQL dump file represents a **Construction Management System (CMS)** database built with **MariaDB / MySQL**.  
 It is designed to manage construction projects, contractors, materials, equipment, expenses, and payments efficiently.  
 
@@ -8,7 +8,7 @@ The database includes foreign key relationships, data validation through trigger
 
 ---
 
-## 🧱 Database Information
+## Database Information
 - **Database Name:** `cms`  
 - **SQL Dump Source:** phpMyAdmin 5.2.1  
 - **Server Version:** 10.4.28-MariaDB  
@@ -17,7 +17,7 @@ The database includes foreign key relationships, data validation through trigger
 
 ---
 
-## ⚙️ How to Import the Database
+## How to Import the Database
 
 1. **Open phpMyAdmin** or connect to your MySQL/MariaDB server.
 2. **Create a new database** named `cms`:
