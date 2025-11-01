@@ -26,7 +26,7 @@ It is designed to help track project budgets, manage resources, and monitor cont
 
 ---
 
-## ⚙️ Functional Logic
+##  Functional Logic
 
 ### 1. **Trigger Function**
 #### `check_project_budget()`
@@ -54,3 +54,23 @@ BEGIN
   RETURN NEW;
 END;
 $$;
+
+## 2. Trigger
+```sql
+Applied on the expense table:
+CREATE TRIGGER check_project_budget
+BEFORE INSERT ON public.expense
+FOR EACH ROW
+EXECUTE FUNCTION public.check_project_budget();
+```sql
+### 3. View
+total_payment
+
+Shows each contractor’s total project budgets:
+```sql
+CREATE VIEW public.total_payment AS
+SELECT contractorid,
+       SUM(budget) AS total_budget
+FROM public.project
+GROUP BY contractorid;
+```sql
