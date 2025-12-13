@@ -108,8 +108,7 @@ The dump includes sample records for contractors, projects, materials, and expen
 
 ---
 
-## Notes on Previous Documentation
-If you have an older README referencing **MySQL/MariaDB** (phpMyAdmin, `cms.sql`, etc.), consider this document the **authoritative and updated reference** for the PostgreSQL implementation.
+
 
 ---
 
