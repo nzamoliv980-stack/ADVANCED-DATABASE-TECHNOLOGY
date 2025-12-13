@@ -1,42 +1,124 @@
-# Construction Management System (CMS) Database
+# Construction Management System (CMS) – PostgreSQL
+
+> **README.md**
 
 ## Overview
-This SQL dump file represents a **Construction Management System (CMS)** database built with **MariaDB / MySQL**.  
-It is designed to manage construction projects, contractors, materials, equipment, expenses, and payments efficiently.  
+This project implements a **Construction Management System (CMS)** using **PostgreSQL**. It manages construction projects, contractors, materials, equipment, expenses, and payments, and enforces business rules such as **project budget control** using triggers and functions.
 
-The database includes foreign key relationships, data validation through triggers, and a view for project payment summaries.
+This README **updates and supersedes** earlier MySQL/MariaDB-oriented documentation by aligning it with the current **PostgreSQL SQL dump (`CAT.sql`)**.
 
 ---
 
 ## Database Information
-- **Database Name:** `cms`  
-- **SQL Dump Source:** phpMyAdmin 5.2.1  
-- **Server Version:** 10.4.28-MariaDB  
-- **PHP Version:** 8.2.4  
-- **Character Set:** `utf8mb4`  
+- **Database Name:** `construction_management` (recommended)
+- **DBMS:** PostgreSQL 16+
+- **SQL Dump File:** `CAT.sql`
+- **Encoding:** UTF-8
 
 ---
 
-## How to Import the Database
+## Core Features
+- Project and contractor management
+- Material and equipment tracking per project
+- Expense recording with **automatic budget validation**
+- Contractor payments management
+- Referential integrity via foreign keys
+- Advanced objects: **functions, triggers, views**
 
-1. **Open phpMyAdmin** or connect to your MySQL/MariaDB server.
-2. **Create a new database** named `cms`:
-   ```sql
-   CREATE DATABASE cms;
-   USE cms;
-## Import the SQL dump file:
+---
 
-In phpMyAdmin: click Import → Choose File → Upload the SQL dump.
+## Schema Overview
+### Main Tables
+- `contractor`
+- `project`
+- `material`
+- `equipment`
+- `expense`
+- `payment`
 
-Or via terminal:
+### Relationships
+- One contractor → many projects
+- One project → many materials, equipment records, expenses, and payments
 
-```bash
-mysql -u root -p cms < cms.sql
+---
+
+## Advanced Database Objects
+
+### Trigger Function: `check_project_budget()`
+Prevents inserting an expense when the total expenses exceed the project budget.
+
+- Executes **BEFORE INSERT** on `expense`
+- Calculates cumulative expenses per project
+- Raises an exception if the budget limit is exceeded
+
+### Trigger
+```sql
+CREATE TRIGGER check_project_budget
+BEFORE INSERT ON expense
+FOR EACH ROW
+EXECUTE FUNCTION check_project_budget();
 ```
 
-The system will automatically create:
+### View: `total_payment`
+Summarizes total project budgets by contractor.
 
-- All required tables,
-- Insert sample data,
-- Define foreign keys,
-- And create the check_project_budget trigger.
+```sql
+SELECT contractorid, SUM(budget) AS total_budget
+FROM project
+GROUP BY contractorid;
+```
+
+---
+
+## Installation & Setup (PostgreSQL)
+
+1. Create the database:
+```sql
+CREATE DATABASE construction_management;
+```
+
+2. Connect to the database:
+```sql
+\c construction_management
+```
+
+3. Import the SQL dump:
+```bash
+psql -U postgres -d construction_management -f CAT.sql
+```
+
+4. Verify objects:
+```sql
+\dt
+\df
+\dv
+```
+
+---
+
+## Sample Data
+The dump includes sample records for contractors, projects, materials, and expenses to allow immediate testing of queries, triggers, and views.
+
+---
+
+## Usage Examples
+- Add projects and assign contractors
+- Insert expenses (budget is validated automatically)
+- Query contractor-level budget summaries via `total_payment`
+
+---
+
+## Notes on Previous Documentation
+If you have an older README referencing **MySQL/MariaDB** (phpMyAdmin, `cms.sql`, etc.), consider this document the **authoritative and updated reference** for the PostgreSQL implementation.
+
+---
+
+## Author
+**Nzamwita Olivier**  
+BSc Mathematics & Biology with Education  
+MSc Data Science – University of Rwanda
+
+---
+
+## License
+Academic use only.
