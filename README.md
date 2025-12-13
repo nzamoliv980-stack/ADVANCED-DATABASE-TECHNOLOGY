@@ -113,12 +113,9 @@ If you have an older README referencing **MySQL/MariaDB** (phpMyAdmin, `cms.sql`
 
 ---
 
-## Author
-**Nzamwita Olivier**  
-BSc Mathematics & Biology with Education  
-MSc Data Science – University of Rwanda
+ 
+
 
 ---
 
-## License
-Academic use only.
+
